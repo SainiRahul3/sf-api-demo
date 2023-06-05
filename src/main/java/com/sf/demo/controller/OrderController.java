@@ -3,7 +3,7 @@ package com.sf.demo.controller;
 
 import com.sf.demo.Repository.CustomerRepository;
 import com.sf.demo.model.Customer;
-import com.sf.demo.model.Order;
+import com.sf.demo.model.CustomerOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +32,8 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Order>> getAllOrdersForCustomer(@PathVariable("customerId") Long customerId) {
-        List<Order> orders = orderRepository.findOrdersByCustomerId(customerId);
+    public ResponseEntity<List<CustomerOrder>> getAllOrdersForCustomer(@PathVariable("customerId") Long customerId) {
+        List<CustomerOrder> orders = orderRepository.findOrdersByCustomerId(customerId);
         if (!orders.isEmpty()) {
             return ResponseEntity.ok(orders);
         } else {
@@ -42,12 +42,13 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrderForCustomer(@PathVariable("customerId") Long customerId,
-            @RequestBody Order order) {
+    public ResponseEntity<CustomerOrder> createOrderForCustomer(@PathVariable("customerId") Long customerId,
+            @RequestBody CustomerOrder order) {
         Customer customer = customerRepository.findById(customerId).orElse(null);
         if (customer != null) {
             order.setCustomer(customer);
-            Order savedOrder = orderRepository.save(order);
+            order.setOrderItems(order.getOrderItems());
+            CustomerOrder savedOrder = orderRepository.save(order);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedOrder);
         } else {
             return ResponseEntity.notFound().build();

@@ -1,7 +1,7 @@
 package com.sf.demo.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -20,15 +20,15 @@ public class Customer {
     private String name;
     private String email;
 
-    @JsonBackReference
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Order> orders = new ArrayList<>();
+    @JsonManagedReference
+    private List<CustomerOrder> orders = new ArrayList<>();
 
-    public List<Order> getOrders() {
+    public List<CustomerOrder> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(List<CustomerOrder> orders) {
         this.orders = orders;
     }
 

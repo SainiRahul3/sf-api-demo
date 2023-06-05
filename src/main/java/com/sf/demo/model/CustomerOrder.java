@@ -16,23 +16,22 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-
 @Entity
-@Table(name = "orders")
-public class Order {
+@Table(name = "customer_order")
+public class CustomerOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private LocalDate orderDate;
 
-    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonBackReference
     private Customer customer;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customerOrder", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<OrderItem> orderItems;
 
     public LocalDate getOrderDate() {

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.sf.demo</groupId>
 	<artifactId>live</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>client</name>
 	<description>An OAuth2 Client with Spring Boot and Spring Security</description>
 
